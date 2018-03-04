@@ -28,9 +28,7 @@ export default class Generator {
 	 */
 	getCost () {
 		// TODO: implement the function according to doc above
-		var xt;
-		xt=this.baseCost*Math.pow((1+this.rate),this.quantity);
-		return xt;
+		return 0;
 	}
 
 	/**
@@ -40,6 +38,6 @@ export default class Generator {
 	 */
 	generate () {
 		// TODO: implement based on doc above
-		return this.rate*this.quantity;
+		return 0;
 	}
 }
