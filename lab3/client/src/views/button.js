@@ -5,9 +5,16 @@ export default function (store) {
 			this.store = store;
 
 			this.onStateChange = this.handleStateChange.bind(this);
-
+			this.innerHTML='<h1 id="buttontobuy"></h1>'
 			// TODO: add click event to increment counter
 			// hint: use "store.dispatch" method (see example component)
+
+			this.addEventListener('onclick',()=>{
+				this.store.dispatch({
+					type:constants.actions.INCREMENT,
+					payload:window.globalGeneratorRate + 1
+				});
+			});
 		}
 	};
 }

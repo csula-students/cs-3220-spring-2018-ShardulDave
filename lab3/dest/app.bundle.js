@@ -178,7 +178,6 @@ function main() {
 	// initialize store
 	const store = new _store2.default(_reducer2.default, initialState);
 	console.log((0, _example2.default)(store));
-
 	// define web components
 	window.customElements.define('component-example', (0, _example2.default)(store));
 	// no longer used
