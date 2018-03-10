@@ -25,8 +25,10 @@ export default function (store) {
 		}
 
 		connectedCallback () {
-			console.log('ExampleComponent#onConnectedCallback');
-			this.store.subscribe(this.onStateChange);
+			console.log('ExampleComponent#onConnectedCallback');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	
+
+				this.store.subscribe(this.onStateChange);
 		}
 
 		disconnectedCallback () {

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,35 +70,54 @@
 "use strict";
 
 
-__webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = {
+	growthRatio: 0.05,
+	actions: {
+		EXAMPLE: 'EXAMPLE_MUTATION',
+		BUY_GENERATOR: 'BUY_GENERATOR',
+		BUTTON_CLICK: 'CASH BUTTON'
+	}
+};
 
-var _game = __webpack_require__(4);
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var _store = __webpack_require__(5);
+"use strict";
+
+
+__webpack_require__(2);
+
+var _game = __webpack_require__(5);
+
+var _store = __webpack_require__(6);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _reducer = __webpack_require__(6);
+var _reducer = __webpack_require__(7);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _button = __webpack_require__(7);
+var _button = __webpack_require__(8);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _counter = __webpack_require__(8);
+var _counter = __webpack_require__(9);
 
 var _counter2 = _interopRequireDefault(_counter);
 
-var _example = __webpack_require__(9);
+var _example = __webpack_require__(10);
 
 var _example2 = _interopRequireDefault(_example);
 
-var _generator = __webpack_require__(10);
+var _generator = __webpack_require__(11);
 
 var _generator2 = _interopRequireDefault(_generator);
 
-var _storyBook = __webpack_require__(11);
+var _storyBook = __webpack_require__(13);
 
 var _storyBook2 = _interopRequireDefault(_storyBook);
 
@@ -171,7 +190,31 @@ function main() {
 	const initialState = {
 		example: 'Hello custom element',
 		counter: 0,
-		generators: [],
+		generators: [{
+			type: 0,
+			name: "Salary",
+			description: "Increase by 5 per second",
+			rate: 5,
+			quantity: 0,
+			baseCost: 10,
+			unlockValue: 10
+		}, {
+			type: 1,
+			name: "Stocks",
+			description: "Increase by 10 per second",
+			rate: 10,
+			quantity: 0,
+			baseCost: 50,
+			unlockValue: 50
+		}, {
+			type: 2,
+			name: "Rent",
+			description: "Increase by 20 per second",
+			rate: 20,
+			quantity: 0,
+			baseCost: 100,
+			unlockValue: 100
+		}],
 		story: []
 	};
 
@@ -198,7 +241,7 @@ function main() {
 }
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function(){/*
@@ -399,10 +442,10 @@ Eg.whenReady(function(){requestAnimationFrame(function(){window.WebComponents.re
 
 //# sourceMappingURL=webcomponents-lite.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)))
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -429,7 +472,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -619,7 +662,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -653,7 +696,7 @@ function increment(state, modifier = 1) {
 }
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -724,7 +767,7 @@ function deepCopy(obj) {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -734,10 +777,47 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = reducer;
+
+var _constants = __webpack_require__(0);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var index = 0;
+
 function reducer(state, action) {
 	switch (action.type) {
-		case 'EXAMPLE_MUTATION':
+		case _constants2.default.actions.EXAMPLE:
 			state.example = action.payload;
+			return state;
+		case _constants2.default.actions.BUTTON_CLICK:
+			state.counter++;
+			return state;
+		case _constants2.default.actions.BUY_GENERATOR:
+			const currentGenerator = action.generatorClicked || 0;
+
+			const gModelCost = new Generator(state.generators[currentGenerator]);
+			// state.counter -= state.generators[currentGenerator].baseCost;
+			state.counter -= Math.ceil(gModelCost.getCost());
+			state.generators[currentGenerator].quantity += 1;
+
+			const gModel = new Generator(state.generators[currentGenerator]);
+			// state.generators[currentGenerator].baseCost = Math.ceil(gModel.getCost());
+			// console.log(Math.ceil(gModel.getCost()));
+
+			state.generators[currentGenerator].unlockValue = Math.floor(gModel.getCost());
+
+			// console.log("base cost reducer = ",state.generators[currentGenerator].baseCost);
+			state.counter = state.counter < 0 ? 0 : state.counter;
+
+			// state.generators[currentGenerator].unlockValue = state.generators[currentGenerator].baseCost;
+
+
+			// console.log(state.generators[currentGenerator].unlockValue);
+
+
+			window.globalGeneratorRate += state.generators[currentGenerator].rate;
 			return state;
 		default:
 			return state;
@@ -745,7 +825,7 @@ function reducer(state, action) {
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -760,24 +840,35 @@ exports.default = function (store) {
 		constructor() {
 			super();
 			this.store = store;
+		}
 
-			this.onStateChange = this.handleStateChange.bind(this);
+		connectedCallback() {
+			console.log('ExampleComponent#onConnectedCallback');
+			this.innerHTML = '<button>Click me</button>';
+			this.addEventListener('click', () => {
+				console.log('Hello click');
 
-			this.addEventListener('onclick', () => {
 				this.store.dispatch({
-					type: constants.actions.INCREMENT,
-					payload: window.globalGeneratorRate + 1
+					type: _constants2.default.actions.BUTTON_CLICK
 				});
 			});
+		}
 
-			// TODO: add click event to increment counter
-			// hint: use "store.dispatch" method (see example component)
+		disconnectedCallback() {
+			console.log('ExampleComponent#onDisconnectedCallback');
+			this.store.unsubscribe(this.onStateChange);
 		}
 	};
 };
 
+var _constants = __webpack_require__(0);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -792,17 +883,16 @@ exports.default = function (store) {
 		constructor() {
 			super();
 			this.store = store;
-			// TODO: render counter inner HTML based on the store state
-
 			this.onStateChange = this.handleStateChange.bind(this);
 		}
 
 		handleStateChange(newState) {
 			console.log('CounterComponent#stateChange', this, newState);
-			// TODO: update inner HTML based on the new state
+			this.innerHTML = `Cash: ${newState.counter}`;
 		}
 
 		connectedCallback() {
+			this.innerHTML = 'Cash: 0';
 			this.store.subscribe(this.onStateChange);
 		}
 
@@ -813,7 +903,7 @@ exports.default = function (store) {
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -850,6 +940,7 @@ exports.default = function (store) {
 
 		connectedCallback() {
 			console.log('ExampleComponent#onConnectedCallback');
+
 			this.store.subscribe(this.onStateChange);
 		}
 
@@ -861,7 +952,7 @@ exports.default = function (store) {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -877,17 +968,140 @@ exports.default = function (store) {
 			super();
 			this.store = store;
 
-			// TODO: render generator initial view
+			this.rateChangeIncrement = null;
+			this.calledOnce = false;
 
+			this.onStateChange = this.handleStateChange.bind(this);
+
+			// TODO: render generator initial view
+			document.write('<div id="nu"></div>');
+
+			this.store.state.generators.forEach(i => {
+				const GenObj = new _generator2.default(i);
+				const ttt = document.createElement('h2');
+				ttt.innerHTML = "Hello";
+				const box = document.createElement('div');
+				box.className = 'BOX' + GenObj.type;
+
+				const GenName = document.createElement('h2');
+				GenName.innerHTML = GenObj.name;
+				box.appendChild(GenName);
+				parent.appendChild(box);
+
+				const GenQuantity = document.getElementById('p');
+				GenQuantity.innerHTML = GenObj.quantity;
+				GenName.appendChild(GenQuantity);
+
+				const GenRate = document.createElement('p');
+				GenRate.innerHTML = GenObj.rate;
+
+				const Genbutton = document.createElement('button');
+				GenButton.addEventListener('click', event => {
+					this.store.dispatch({
+						type: _constants2.default.actions.BUY_GENERATOR,
+						payload: counter - GenObj.getCost
+					});
+				});
+			});
+
+			this.appendChild(parent);
 			// TODO: subscribe to store on change event
 
 			// TODO: add click event
 		}
+
+		handleStateChange(newState) {
+			console.log('ExampleComponent#stateChange', this);
+			this.textContent = newState.example;
+		}
+
+		connectedCallback() {
+			console.log("GeneratorComponent#connectedCallback");
+			this.store.subscribe(this.onStateChange);
+		}
+
+		disconnectedCallback() {
+			// console.log("GeneratorComponent#disconnectedCallback");
+			this.store.unsubscribe(this.onStateChange);
+		}
 	};
 };
 
+var _constants = __webpack_require__(0);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+var _generator = __webpack_require__(12);
+
+var _generator2 = _interopRequireDefault(_generator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /***/ }),
-/* 11 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _constants = __webpack_require__(0);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class Generator {
+	/**
+ .+
+  * Create a new generator based on the meta object passing in
+  * @constructor
+  * @param {object} meta - meta object for constructing generator
+  */
+	constructor(meta) {
+		this.type = meta.type;
+		this.name = meta.name;
+		this.description = meta.description;
+		this.rate = meta.rate;
+		this.quantity = meta.quantity;
+		this.baseCost = meta.baseCost;
+		this.unlockValue = meta.unlockValue;
+	}
+
+	/**
+  * getCost computes cost exponentially based on quantity (as formula below)
+  * xt = x0(1 + r)^t
+  * which 
+  * xt is the value of x with t quantity
+  * x0 is base value
+  * r is growth ratio (see constants.growthRatio)
+  * t is the quantity
+  * @return {number} the cost of buying another generator
+  */
+	getCost() {
+		// TODO: implement the function according to doc above
+		// return 0;
+		return this.baseCost * Math.pow(1 + _constants2.default.growthRatio, this.quantity);
+	}
+
+	/**
+  * generate computes how much this type of generator generates -
+  * rate * quantity
+  * @return {number} how much this generator generates
+  */
+	generate() {
+		// TODO: implement based on doc above
+		// return 0;
+		return this.rate * this.quantity;
+	}
+}
+exports.default = Generator;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

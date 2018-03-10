@@ -2,6 +2,7 @@ import constants from '../constants';
 
 export default class Generator {
 	/**
+	.+
 	 * Create a new generator based on the meta object passing in
 	 * @constructor
 	 * @param {object} meta - meta object for constructing generator
@@ -28,8 +29,9 @@ export default class Generator {
 	 */
 	getCost () {
 		// TODO: implement the function according to doc above
-		var newCost=(int)(this.baseCost * Math.pow((1+constants.growthRatio),this.quantity));
-		return newCost;
+		// return 0;
+		 return (this.baseCost * Math.pow((1 + constants.growthRatio), this.quantity));
+		
 	}
 
 	/**
@@ -39,6 +41,7 @@ export default class Generator {
 	 */
 	generate () {
 		// TODO: implement based on doc above
+		// return 0;
 		return this.rate * this.quantity;
 	}
 }
