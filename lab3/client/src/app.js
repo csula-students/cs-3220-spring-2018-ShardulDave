@@ -77,40 +77,14 @@ function main () {
 	const initialState = {
 		example: 'Hello custom element',
 		counter: 0,
-		generators: [
-			{
-				type:0,
-				name: 'Grandma',
-				description:'Grandma generates 1 cookie per second',
-				rate:1,
-				quantity:0,
-				basecost:10,
-				unlockValue:10
-			},
-			{
-				type:1,
-				name: 'Farm',
-				description:'Farm generates 5 cookie per second',
-				rate:5,
-				quantity:0,
-				basecost:50,
-				unlockValue:50
-			},
-			{
-				type:2,
-				name: 'Factory',
-				description:'Factory generates 10 cookie per second',
-				rate:10,
-				quantity:0,
-				basecost:100,
-				unlockValue:100
-			}
-		],
+		generators: [],
 		story: []
 	};
 
 	// initialize store
 	const store = new Store(reducer, initialState);
+	console.log(ExampleComponent(store));
+
 	// define web components
 	window.customElements.define('component-example', ExampleComponent(store));
 	// no longer used

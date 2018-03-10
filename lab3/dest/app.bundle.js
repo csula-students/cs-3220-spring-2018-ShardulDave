@@ -178,6 +178,7 @@ function main() {
 	// initialize store
 	const store = new _store2.default(_reducer2.default, initialState);
 	console.log((0, _example2.default)(store));
+
 	// define web components
 	window.customElements.define('component-example', (0, _example2.default)(store));
 	// no longer used
@@ -761,6 +762,13 @@ exports.default = function (store) {
 			this.store = store;
 
 			this.onStateChange = this.handleStateChange.bind(this);
+
+			this.addEventListener('onclick', () => {
+				this.store.dispatch({
+					type: constants.actions.INCREMENT,
+					payload: window.globalGeneratorRate + 1
+				});
+			});
 
 			// TODO: add click event to increment counter
 			// hint: use "store.dispatch" method (see example component)
