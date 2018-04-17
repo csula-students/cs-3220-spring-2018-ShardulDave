@@ -23,27 +23,31 @@ public class AdminEventsServlet extends HttpServlet {
 		// TODO: render the events page HTML
 		EventsDAO dao = new EventsDAOImpl(getServletContext());
 		Collection<Event> events = dao.getAll();
+		events.add(new Event(1,"Shardul","Hello world",1));
 		System.out.println(events);
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
         String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
         html+="<h1>Incremental Game Framework</h1>";
         html+="<h3><a href=''>Game Information</a> | <a href=''>Generators</a> | <a href='/admin/events'>Events</a> ";
-        html+="<div class='flex-container1'>";
-        html+="  <div>";
         html+="     <form method='POST>";
-        html+="  <div class='flex-container'>";
-        html+="        <div><label for='EventName'>Event Name</label></div> ";
-        html+="        <div><input type='text' name='evename' id='EventName'</div>";
-        html+="        <div><label for='EventDescription'>Event Description</label></div>";
-        html+="        <div><textarea name='EventDescription'></textarea></div>";
-        html+="        <div><label for='TriggerName'>Trigger At</label></div>";
-        html+="        <div><input type='text' name='triggname' id='TriggerNameName'</div>";
-        html+="   </div>";
+        html+="        <label for='EventName'>Event Name</label>";
+        html+="        <input type='text' name='evename' id='EventName'";
+        html+="        <label for='EventDescription'>Event Description</label>";
+        html+="        <textarea name='EventDescription'></textarea>";
+        html+="        <label for='TriggerName'>Trigger At</label>";
+        html+="        <input type='text' name='triggname' id='TriggerNameName'";
         html+="     </form>";
-        html+="  </div>";
-        html+="  <div class='column'>Column2</div>\n";
-        html+="</div>";
+        html+="     <table border='1'>";
+        html+="         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
+                    for(Event e:events){
+                        html+="<tr>";
+                        html+="<td>"+e.getName()+"</td>"+"<td>"+e.getDescription()+"</td>"+"<td>"+e.getTriggerAt()+"</td>"+"<td>edit|delete"+"</td>";
+                        html+="</tr>";
+                    }
+        html+="     </table>";
         html+="</body></html>";
+
+
 
 		out.println(html);
 	}
