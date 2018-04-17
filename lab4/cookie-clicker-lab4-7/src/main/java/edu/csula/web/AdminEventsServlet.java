@@ -3,6 +3,7 @@ package edu.csula.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,8 @@ public class AdminEventsServlet extends HttpServlet {
 		// TODO: render the events page HTML
 		EventsDAO dao = new EventsDAOImpl(getServletContext());
 		Collection<Event> events = dao.getAll();
-		events.add(new Event(1,"Shardul","Hello world",1));
+		events.add(new Event(1,"Hehe","wdwqd",1));
+        events.add(new Event(2,"Hehe","wdwqd",2));
 		System.out.println(events);
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
         String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
@@ -35,7 +37,8 @@ public class AdminEventsServlet extends HttpServlet {
         html+="        <label for='EventDescription'>Event Description</label>";
         html+="        <textarea name='EventDescription'></textarea>";
         html+="        <label for='TriggerName'>Trigger At</label>";
-        html+="        <input type='text' name='triggname' id='TriggerNameName'";
+        html+="        <input type='number' name='triggname' id='TriggerNameName'>";
+        html+="        <button>Submit</button>";
         html+="     </form>";
         html+="     <table border='1'>";
         html+="         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
@@ -48,7 +51,6 @@ public class AdminEventsServlet extends HttpServlet {
         html+="</body></html>";
 
 
-
 		out.println(html);
 	}
 
@@ -56,5 +58,13 @@ public class AdminEventsServlet extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO: handle upsert transaction
+        EventsDAO dao = new EventsDAOImpl(getServletContext());
+        String name=request.getParameter("evename");
+        String description=request.getParameter("EventDescription");
+        int triggerAt=Integer.parseInt(request.getParameter("triggname"));
+        Event e=new Event(1,name,description,triggerAt);
+        dao.add(e);
+        response.sendRedirect("/admin/events");
+
 	}
 }
