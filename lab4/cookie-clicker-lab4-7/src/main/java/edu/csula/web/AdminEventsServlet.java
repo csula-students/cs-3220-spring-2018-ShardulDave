@@ -24,7 +24,6 @@ public class AdminEventsServlet extends HttpServlet {
 		// TODO: render the events page HTML
 		EventsDAO dao = new EventsDAOImpl(getServletContext());
 		Collection<Event> events = dao.getAll();
-		System.out.println(events);
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
         String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
         html+="<h1>Incremental Game Framework</h1>";
@@ -42,7 +41,7 @@ public class AdminEventsServlet extends HttpServlet {
         html+="         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
                     for(Event e:events){
                         html+="<tr>";
-                        html+="<td>"+e.getName()+"</td>"+"<td>"+e.getDescription()+"</td>"+"<td>"+e.getTriggerAt()+"</td>"+"<td>edit|delete"+"</td>";
+                        html+="<td>"+e.getName()+"</td>"+"<td>"+e.getDescription()+"</td>"+"<td>"+e.getTriggerAt()+"</td>"+"<td><a href='/admin/events/edit?id="+e.getId()+"'>edit</a>|<a href='/admin/events/remove?id="+e.getId()+"'>delete</a>"+"</td>";
                         html+="</tr>";
                     }
         html+="     </table>";
@@ -57,12 +56,12 @@ public class AdminEventsServlet extends HttpServlet {
 	public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO: handle upsert transaction
         EventsDAO dao = new EventsDAOImpl(getServletContext());
+        Collection<Event> events = dao.getAll();
         String name=request.getParameter("evename");
         String description=request.getParameter("EventDescription");
         int triggerAt=Integer.parseInt(request.getParameter("triggname"));
-        Event e=new Event(1,name,description,triggerAt);
+        Event e=new Event(events.size(),name,description,triggerAt);
         dao.add(e);
         response.sendRedirect("/admin/events");
-
 	}
 }
