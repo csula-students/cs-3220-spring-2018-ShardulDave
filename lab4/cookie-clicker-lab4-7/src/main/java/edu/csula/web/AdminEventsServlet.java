@@ -24,14 +24,12 @@ public class AdminEventsServlet extends HttpServlet {
 		// TODO: render the events page HTML
 		EventsDAO dao = new EventsDAOImpl(getServletContext());
 		Collection<Event> events = dao.getAll();
-		events.add(new Event(1,"Hehe","wdwqd",1));
-        events.add(new Event(2,"Hehe","wdwqd",2));
 		System.out.println(events);
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
         String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
         html+="<h1>Incremental Game Framework</h1>";
         html+="<h3><a href=''>Game Information</a> | <a href=''>Generators</a> | <a href='/admin/events'>Events</a> ";
-        html+="     <form method='POST>";
+        html+="     <form method='POST'>";
         html+="        <label for='EventName'>Event Name</label>";
         html+="        <input type='text' name='evename' id='EventName'";
         html+="        <label for='EventDescription'>Event Description</label>";
