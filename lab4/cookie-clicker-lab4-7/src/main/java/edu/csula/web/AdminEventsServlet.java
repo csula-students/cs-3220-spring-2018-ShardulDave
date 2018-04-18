@@ -25,25 +25,34 @@ public class AdminEventsServlet extends HttpServlet {
 		EventsDAO dao = new EventsDAOImpl(getServletContext());
 		Collection<Event> events = dao.getAll();
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
-        String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
+        String html="<html><head><title>Incremental Game</title>"+cssTag+"</head><body>";
         html+="<h1>Incremental Game Framework</h1>";
         html+="<h3><a href=''>Game Information</a> | <a href=''>Generators</a> | <a href='/admin/events'>Events</a> ";
+        html+="<div class='row'>";
+        html+="<div class='column'>";
+        html+="<div class='flex-container'>";
         html+="     <form method='POST'>";
-        html+="        <label for='EventName'>Event Name</label>";
-        html+="        <input type='text' name='evename' id='EventName'";
-        html+="        <label for='EventDescription'>Event Description</label>";
-        html+="        <textarea name='EventDescription'></textarea>";
-        html+="        <label for='TriggerName'>Trigger At</label>";
-        html+="        <input type='number' name='triggname' id='TriggerNameName'>";
-        html+="        <button>Submit</button>";
+        html+="        <div><label for='EventName'>Event Name</label></div>";
+        html+="        <div><input type='text' name='evename' id='EventName'</div>";
+        html+="        <div><label for='EventDescription'>Event Description</label></div>";
+        html+="        <div><textarea name='EventDescription'></textarea></div>";
+        html+="        <div><label for='TriggerName'>Trigger At</label></div>";
+        html+="        <div><input type='number' name='triggname' id='TriggerNameName'></div>";
+        html+="        <div><button>Submit</button></div>";
         html+="     </form>";
+        html+="</div>";
+        html+="</div>";
+        html+="<div class='column'>";
+
+        html+="</div>";
+        html+="</div>";
         html+="     <table border='1'>";
         html+="         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
-                    for(Event e:events){
-                        html+="<tr>";
-                        html+="<td>"+e.getName()+"</td>"+"<td>"+e.getDescription()+"</td>"+"<td>"+e.getTriggerAt()+"</td>"+"<td><a href='/admin/events/edit?id="+e.getId()+"'>edit</a>|<a href='/admin/events/remove?id="+e.getId()+"'>delete</a>"+"</td>";
-                        html+="</tr>";
-                    }
+        for(Event e:events){
+            html+="<tr>";
+            html+="<td>"+e.getName()+"</td>"+"<td>"+e.getDescription()+"</td>"+"<td>"+e.getTriggerAt()+"</td>"+"<td><a href='/admin/events/edit?id="+e.getId()+"'>edit</a>|<a href='/admin/events/remove?id="+e.getId()+"'>delete</a>"+"</td>";
+            html+="</tr>";
+        }
         html+="     </table>";
         html+="</body></html>";
 
