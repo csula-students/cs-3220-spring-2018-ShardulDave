@@ -46,7 +46,7 @@ public class AdminEventsServlet extends HttpServlet {
 
         html+="</div>";
         html+="</div>";
-        html+="     <table border='1'>";
+        html+="     <table border='1' cellpadding='15'>";
         html+="         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
         for(Event e:events){
             html+="<tr>";
