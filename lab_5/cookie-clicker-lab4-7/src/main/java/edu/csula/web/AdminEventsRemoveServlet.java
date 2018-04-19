@@ -25,6 +25,6 @@ public class AdminEventsRemoveServlet extends HttpServlet {
         EventsDAO dao = new EventsDAOImpl(getServletContext());
         int id=Integer.parseInt(request.getParameter("id"));
         dao.remove(id);
-        response.sendRedirect("events");
+        response.sendRedirect("/admin/events");
     }
 }
