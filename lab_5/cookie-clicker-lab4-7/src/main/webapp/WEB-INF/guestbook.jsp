@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Hello GuestBook</h1>
 <table border='1'>
-    <c:forEach items="${guestbookentries" var="entry">
+    <c:forEach items="${guestbookentries}" var="entry">
     <tr>
         <td>${entry.username}</td>
         <td>${entry.comment}</td>

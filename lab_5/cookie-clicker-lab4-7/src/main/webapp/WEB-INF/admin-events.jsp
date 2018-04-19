@@ -43,21 +43,24 @@
                 <div class='column'></div>
             </div>
             <table border='1' cellpadding='15'>
+
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Trigger At</th>
                     <th>Actions</th>
                 </tr>
+                <c:forEach items="${events}" var="e">
                 <tr>
-                    <td>sada</td>
-                    <td>asd</td>
-                    <td>123</td>
+                    <td>${e.getName()}</td>
+                    <td>${e.getDescription()}</td>
+                    <td>${e.getTriggerAt()}</td>
                     <td>
-                        <a href='/admin/events/edit?id=0'>edit</a>|
-                        <a href='/admin/events/remove?id=0'>delete</a>
+                        <a href='/admin/events/edit?id=${e.getId()}'>edit</a>|
+                        <a href='/admin/events/remove?id=${e.getId()}'>delete</a>
                     </td>
                 </tr>
+                </c:forEach>
             </table>
 </body>
 
