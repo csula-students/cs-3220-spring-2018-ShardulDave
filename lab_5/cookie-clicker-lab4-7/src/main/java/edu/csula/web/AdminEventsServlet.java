@@ -15,7 +15,7 @@ import edu.csula.storage.servlet.EventsDAOImpl;
 import edu.csula.storage.EventsDAO;
 import edu.csula.models.Event;
 
-@WebServlet("/admin/events")
+@WebServlet("events")
 public class AdminEventsServlet extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,6 +39,6 @@ public class AdminEventsServlet extends HttpServlet {
         int triggerAt=Integer.parseInt(request.getParameter("triggname"));
         Event e=new Event(events.size(),name,description,triggerAt);
         dao.add(e);
-        response.sendRedirect("/admin/events");
+        response.sendRedirect("events");
 	}
 }
