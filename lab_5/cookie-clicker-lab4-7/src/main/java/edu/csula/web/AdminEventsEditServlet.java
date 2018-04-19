@@ -47,6 +47,6 @@ public class AdminEventsEditServlet extends HttpServlet {
         int triggerAt=Integer.parseInt(request.getParameter("triggname"));
         Event e=new Event(id,name,description,triggerAt);
         dao.set(id,e);
-        response.sendRedirect("/admin/events");
+        response.sendRedirect("/events");
     }
 }
