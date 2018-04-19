@@ -56,8 +56,8 @@
                     <td>${e.getDescription()}</td>
                     <td>${e.getTriggerAt()}</td>
                     <td>
-                        <a href='/edit?id=${e.getId()}'>edit</a>|
-                        <a href='/remove?id=${e.getId()}'>delete</a>
+                        <a href='/admin/events/edit?id=${e.getId()}'>edit</a>|
+                        <a href='/admin/events/remove?id=${e.getId()}'>delete</a>
                     </td>
                 </tr>
                 </c:forEach>
