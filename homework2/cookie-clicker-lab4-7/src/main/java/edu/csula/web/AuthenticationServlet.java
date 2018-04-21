@@ -1,5 +1,8 @@
 package edu.csula.web;
 
+import edu.csula.storage.UsersDAO;
+import edu.csula.storage.servlet.UsersDAOImpl;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -17,16 +20,46 @@ public class AuthenticationServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		// TODO: render the authentication page HTML
-		out.println("<h1>Hello login servlet!</h1>");
+
+
+		String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
+		String html="<html><head><title>Login</title>"+cssTag+"</head><body>";
+		html+="<h1>Incremental Game Framework</h1>";
+        html+="     <form action='login' method='POST'>";
+        html+="        <label for='username'>Username</label>";
+        html+="        <input type='text' name='username' id='uname'>";
+        html+="        <label for='password'>Password</label>";
+        html+="        <input type='text' name='password' id='pass'>";
+        html+="        <button>Login</button>";
+        html+="     </form>";
+		html+="</body></html>";
+		out.println(html);
 	}
 
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO: handle login
+        // TODO: handle upsert transaction
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
+
+        UsersDAO dao=new UsersDAOImpl(request.getSession());
+        //Check is username and password are correct, redirect to members
+        if(dao.authenticate(username,password)){
+            response.sendRedirect("/admin/events");
+        }
+
+        //redirect to login
+        else{
+            response.sendRedirect("/admin/auth");
+        }
 	}
 
     @Override
     public void doDelete( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: handle logout
+        UsersDAO dao=new UsersDAOImpl(request.getSession());
+        dao.logout();
+        response.sendRedirect("/admin/auth");
     }
 }

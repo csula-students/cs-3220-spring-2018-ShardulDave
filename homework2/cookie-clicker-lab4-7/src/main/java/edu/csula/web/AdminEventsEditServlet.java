@@ -33,7 +33,7 @@ public class AdminEventsEditServlet extends HttpServlet {
             }
         }
         String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
-        String html="<html><head><title>Incremental Game</title></head>"+cssTag+"</head><body>";
+        String html="<html><head><title>Incremental Game</title>"+cssTag+"</head><body>";
         html+="<h1>Incremental Game Framework</h1>";
         html+="<h3><a href=''>Game Information</a> | <a href=''>Generators</a> | <a href='/admin/events'>Events</a> ";
         html+="     <form method='POST'>";
