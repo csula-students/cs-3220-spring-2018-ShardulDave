@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.csula.models.Generator;
 import edu.csula.storage.GeneratorsDAO;
+import edu.csula.storage.UsersDAO;
 import edu.csula.storage.servlet.GeneratorsDAOImpl;
+import edu.csula.storage.servlet.UsersDAOImpl;
 
 @WebServlet("/admin/generators/edit")
 public class AdminGeneratorsEditServlet extends HttpServlet {
@@ -23,36 +25,42 @@ public class AdminGeneratorsEditServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         // TODO: render the events page HTML
-        GeneratorsDAO dao = new GeneratorsDAOImpl(getServletContext());
-        Collection<Generator> generators = dao.getAll();
-        int id=Integer.parseInt(request.getParameter("id"));
-        Generator g1=null;
-        for(Generator g:generators){
-            if(g.getId()==id){
-                g1=g;
+        UsersDAO daosession=new UsersDAOImpl(request.getSession());
+        if(daosession != null) {
+            GeneratorsDAO dao = new GeneratorsDAOImpl(getServletContext());
+            Collection<Generator> generators = dao.getAll();
+            int id = Integer.parseInt(request.getParameter("id"));
+            Generator g1 = null;
+            for (Generator g : generators) {
+                if (g.getId() == id) {
+                    g1 = g;
+                }
             }
+            String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
+            String html = "<html><head><title>Incremental Game</title>" + cssTag + "</head><body>";
+            html += "<h1>Incremental Game Framework</h1>";
+            html += "<h3><a href=''>Game Information</a> | <a href='/admin/generators'>Generators</a> | <a href='/admin/events'>Events</a> | <a href='/admin/auth'>Logout</a> ";
+            html += "     <form method='POST'>";
+            html += "        <label for='GeneratorName'>Event Name</label></div>";
+            html += "        <input type='text' name='genname' id='GeneratorName' value='" + g1.getName() + "'>";
+            html += "        <label for='GeneratorRate'>Generator Rate</label>";
+            html += "        <input type='number' name='genrate' id='GeneratorRate' value='" + g1.getRate() + "'>";
+            html += "        <label for='BaseCost'>Base Cost</label>";
+            html += "        <input type='number' name='baseecost' id='BaseCost' value='" + g1.getBaseCost() + "'>";
+            html += "        <label for='UnlockAt'>Unlock At</label>";
+            html += "        <input type='number' name='unlockatt' id='UnlockAt' value='" + g1.getUnlockAt() + "'>";
+            html += "        <label for='EventDescription'>Event Description</label>";
+            html += "        <textarea name='EventDescription'>" + g1.getDescription() + "</textarea>";
+            html += "        <button>Submit</button>";
+            html += "     </form>";
+            html += "</body></html>";
+
+
+            out.println(html);
         }
-        String cssTag="<link rel='stylesheet' type='text/css' href='/app.css'>";
-        String html="<html><head><title>Incremental Game</title>"+cssTag+"</head><body>";
-        html+="<h1>Incremental Game Framework</h1>";
-        html+="<h3><a href=''>Game Information</a> | <a href='/admin/generators'>Generators</a> | <a href='/admin/events'>Events</a> ";
-        html+="     <form method='POST'>";
-        html+="        <label for='GeneratorName'>Event Name</label></div>";
-        html+="        <input type='text' name='genname' id='GeneratorName' value='"+g1.getName()+"'>";
-        html+="        <label for='GeneratorRate'>Generator Rate</label>";
-        html+="        <input type='number' name='genrate' id='GeneratorRate' value='"+g1.getRate()+"'>";
-        html+="        <label for='BaseCost'>Base Cost</label>";
-        html+="        <input type='number' name='baseecost' id='BaseCost' value='"+g1.getBaseCost()+"'>";
-        html+="        <label for='UnlockAt'>Unlock At</label>";
-        html+="        <input type='number' name='unlockatt' id='UnlockAt' value='"+g1.getUnlockAt()+"'>";
-        html+="        <label for='EventDescription'>Event Description</label>";
-        html+="        <textarea name='EventDescription'>"+g1.getDescription()+"</textarea>";
-        html+="        <button>Submit</button>";
-        html+="     </form>";
-        html+="</body></html>";
-
-
-        out.println(html);
+        else{
+            response.sendRedirect("/admin/auth");
+        }
     }
 
     @Override

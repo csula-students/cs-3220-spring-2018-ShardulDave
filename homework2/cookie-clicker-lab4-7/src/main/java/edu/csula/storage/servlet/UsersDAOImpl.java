@@ -2,6 +2,7 @@ package edu.csula.storage.servlet;
 
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -24,11 +25,11 @@ public class UsersDAOImpl implements UsersDAO {
     public boolean authenticate(String username, String password) {
         // TODO: check if username/password combination is valid and store the
         //       username/password into the session
-        Collection<User> users=new ArrayList<>();
-        users.add(new User(users.size(),"admin","cs3220password"));
+        List<User> users=new ArrayList<>();
+        users.add(new User(0,"admin","cs3220password"));
         if( users != null) {
             for(User u:users) {
-                if (u.getUsername() == username && u.getPassword() == password) {
+                if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                     context.setAttribute(CONTEXT_NAME, u);
                     return true;
                 }
