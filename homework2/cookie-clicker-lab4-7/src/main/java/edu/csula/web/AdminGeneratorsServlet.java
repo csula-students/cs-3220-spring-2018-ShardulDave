@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/generators")
+@WebServlet("/generators")
 public class AdminGeneratorsServlet extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class AdminGeneratorsServlet extends HttpServlet {
             String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
             String html = "<html><head><title>Incremental Game</title>" + cssTag + "</head><body>";
             html += "<h1>Incremental Game Framework</h1>";
-            html += "<h3><a href=''>Game Information</a> | <a href='/admin/generators'>Generators</a> | <a href='/admin/events'>Events</a> | <a href='/admin/auth'>Logout</a> ";
+            html += "<h3><a href=''>Game Information</a> | <a href='/generators'>Generators</a> | <a href='/events'>Events</a> | <a href='/auth'>Logout</a> ";
             html += "<div class='row'>";
             html += "<div class='column'>";
             html += "<div class='flex-container'>";
@@ -58,7 +58,7 @@ public class AdminGeneratorsServlet extends HttpServlet {
             html += "         <tr><th>Name</th><th>Rate</th><th>Cost</th><th>Unlock At</th><th>Actions</th></tr>";
             for (Generator g : generators) {
                 html += "<tr>";
-                html += "<td>" + g.getName() + "</td>" + "<td>" + g.getRate() + "</td>" + "<td>" + g.getBaseCost() + "</td>" + "<td>" + g.getUnlockAt() + "</td>" + "<td><a href='/admin/generators/edit?id=" + g.getId() + "'>edit</a>|<a href='/admin/generators/remove?id=" + g.getId() + "'>delete</a>" + "</td>";
+                html += "<td>" + g.getName() + "</td>" + "<td>" + g.getRate() + "</td>" + "<td>" + g.getBaseCost() + "</td>" + "<td>" + g.getUnlockAt() + "</td>" + "<td><a href='/generatorsedit?id=" + g.getId() + "'>edit</a>|<a href='/generatorsremove?id=" + g.getId() + "'>delete</a>" + "</td>";
                 html += "</tr>";
             }
             html += "     </table>";
@@ -70,7 +70,7 @@ public class AdminGeneratorsServlet extends HttpServlet {
 
         else{
             daosession.logout();
-            response.sendRedirect("/admin/auth");
+            response.sendRedirect("auth");
         }
 	}
 
@@ -87,6 +87,6 @@ public class AdminGeneratorsServlet extends HttpServlet {
         String description=request.getParameter("EventDescription");
         Generator g=new Generator(generators.size(),name,description,generatorRate,basecost,unlockAt);
         dao.add(g);
-        response.sendRedirect("/admin/generators");
+        response.sendRedirect("generators");
 	}
 }

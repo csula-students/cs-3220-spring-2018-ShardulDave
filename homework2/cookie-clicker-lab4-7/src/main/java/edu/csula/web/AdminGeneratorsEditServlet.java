@@ -18,7 +18,7 @@ import edu.csula.storage.UsersDAO;
 import edu.csula.storage.servlet.GeneratorsDAOImpl;
 import edu.csula.storage.servlet.UsersDAOImpl;
 
-@WebServlet("/admin/generators/edit")
+@WebServlet("/generatorsedit")
 public class AdminGeneratorsEditServlet extends HttpServlet {
 
     public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class AdminGeneratorsEditServlet extends HttpServlet {
             String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
             String html = "<html><head><title>Incremental Game</title>" + cssTag + "</head><body>";
             html += "<h1>Incremental Game Framework</h1>";
-            html += "<h3><a href=''>Game Information</a> | <a href='/admin/generators'>Generators</a> | <a href='/admin/events'>Events</a> | <a href='/admin/auth'>Logout</a> ";
+            html += "<h3><a href=''>Game Information</a> | <a href='/generators'>Generators</a> | <a href='/events'>Events</a> | <a href='/auth'>Logout</a> ";
             html += "     <form method='POST'>";
             html += "        <label for='GeneratorName'>Event Name</label></div>";
             html += "        <input type='text' name='genname' id='GeneratorName' value='" + g1.getName() + "'>";
@@ -59,7 +59,7 @@ public class AdminGeneratorsEditServlet extends HttpServlet {
             out.println(html);
         }
         else{
-            response.sendRedirect("/admin/auth");
+            response.sendRedirect("auth");
         }
     }
 
@@ -76,6 +76,6 @@ public class AdminGeneratorsEditServlet extends HttpServlet {
         String description=request.getParameter("EventDescription");
         Generator g=new Generator(generators.size(),name,description,generatorRate,basecost,unlockAt);
         dao.set(id,g);
-        response.sendRedirect("/admin/generators");
+        response.sendRedirect("generators");
     }
 }

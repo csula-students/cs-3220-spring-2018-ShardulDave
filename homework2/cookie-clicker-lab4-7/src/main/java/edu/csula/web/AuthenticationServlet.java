@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/auth")
+@WebServlet("/auth")
 public class AuthenticationServlet extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class AuthenticationServlet extends HttpServlet {
             String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
             String html = "<html><head><title>Login</title>" + cssTag + "</head><body>";
             html += "<h1>Incremental Game Framework</h1>";
-            html += "     <form action='/admin/auth' method='POST'>";
+            html += "     <form action='auth' method='POST'>";
             html += "        <label for='username'>Username</label>";
             html += "        <input type='text' name='username' id='uname'>";
             html += "        <label for='password'>Password</label>";
@@ -47,12 +47,12 @@ public class AuthenticationServlet extends HttpServlet {
         UsersDAO daosession=new UsersDAOImpl(request.getSession());
         //Check is username and password are correct, redirect to members
         if(daosession.authenticate(username,password)){
-            response.sendRedirect("/admin/events");
+            response.sendRedirect("events");
         }
 
         //redirect to login
         else{
-            response.sendRedirect("/admin/auth");
+            response.sendRedirect("auth");
         }
 	}
 

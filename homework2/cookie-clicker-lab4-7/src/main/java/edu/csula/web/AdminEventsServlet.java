@@ -19,7 +19,7 @@ import edu.csula.storage.EventsDAO;
 import edu.csula.models.Event;
 import edu.csula.storage.servlet.UsersDAOImpl;
 
-@WebServlet("/admin/events")
+@WebServlet("/events")
 public class AdminEventsServlet extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class AdminEventsServlet extends HttpServlet {
             String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
             String html = "<html><head><title>Incremental Game</title>" + cssTag + "</head><body>";
             html += "<h1>Incremental Game Framework</h1>";
-            html += "<h3><a href=''>Game Information</a> | <a href='/admin/generators'>Generators</a> | <a href='/admin/events'>Events</a> | <a href='/admin/auth'>Logout</a> ";
+            html += "<h3><a href=''>Game Information</a> | <a href='/generators'>Generators</a> | <a href='/events'>Events</a> | <a href='/auth'>Logout</a> ";
             html += "<div class='row'>";
             html += "<div class='column'>";
             html += "<div class='flex-container'>";
@@ -58,7 +58,7 @@ public class AdminEventsServlet extends HttpServlet {
             html += "         <tr><th>Name</th><th>Description</th><th>Trigger At</th><th>Actions</th></tr>";
             for (Event e : events) {
                 html += "<tr>";
-                html += "<td>" + e.getName() + "</td>" + "<td>" + e.getDescription() + "</td>" + "<td>" + e.getTriggerAt() + "</td>" + "<td><a href='/admin/events/edit?id=" + e.getId() + "'>edit</a>|<a href='/admin/events/remove?id=" + e.getId() + "'>delete</a>" + "</td>";
+                html += "<td>" + e.getName() + "</td>" + "<td>" + e.getDescription() + "</td>" + "<td>" + e.getTriggerAt() + "</td>" + "<td><a href='/eventsedit?id=" + e.getId() + "'>edit</a>|<a href='/eventsremove?id=" + e.getId() + "'>delete</a>" + "</td>";
                 html += "</tr>";
             }
             html += "     </table>";
@@ -70,7 +70,7 @@ public class AdminEventsServlet extends HttpServlet {
 
         else{
 		    daosession.logout();
-            response.sendRedirect("/admin/auth");
+            response.sendRedirect("auth");
         }
 	}
 
@@ -85,6 +85,6 @@ public class AdminEventsServlet extends HttpServlet {
 		int triggerAt=Integer.parseInt(request.getParameter("triggname"));
 		Event e=new Event(events.size(),name,description,triggerAt);
 		dao.add(e);
-		response.sendRedirect("/admin/events");
+		response.sendRedirect("events");
 	}
 }

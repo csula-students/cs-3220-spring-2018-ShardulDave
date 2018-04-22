@@ -17,7 +17,7 @@ import edu.csula.storage.EventsDAO;
 import edu.csula.models.Event;
 import edu.csula.storage.servlet.GeneratorsDAOImpl;
 
-@WebServlet("/admin/generators/remove")
+@WebServlet("/generatorsremove")
 
 public class AdminGeneratorsRemoveServlet extends HttpServlet {
 
@@ -27,6 +27,6 @@ public class AdminGeneratorsRemoveServlet extends HttpServlet {
        GeneratorsDAO dao = new GeneratorsDAOImpl(getServletContext());
         int id=Integer.parseInt(request.getParameter("id"));
         dao.remove(id);
-        response.sendRedirect("/admin/generators");
+        response.sendRedirect("generators");
     }
 }

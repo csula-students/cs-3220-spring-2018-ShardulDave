@@ -42,7 +42,7 @@ public class Members extends HttpServlet {
         }
 
         else{
-            response.sendRedirect("/admin/events");
+            response.sendRedirect("members");
         }
 
         //if not redirect to login page

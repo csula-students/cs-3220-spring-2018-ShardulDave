@@ -17,7 +17,7 @@ import edu.csula.storage.EventsDAO;
 import edu.csula.models.Event;
 import edu.csula.storage.servlet.UsersDAOImpl;
 
-@WebServlet("/admin/events/remove")
+@WebServlet("/eventsremove")
 
 public class AdminEventsRemoveServlet extends HttpServlet {
 
@@ -29,7 +29,7 @@ public class AdminEventsRemoveServlet extends HttpServlet {
             EventsDAO dao = new EventsDAOImpl(getServletContext());
             int id = Integer.parseInt(request.getParameter("id"));
             dao.remove(id);
-            response.sendRedirect("/admin/events");
+            response.sendRedirect("events");
         }
         else{
             dao1.logout();

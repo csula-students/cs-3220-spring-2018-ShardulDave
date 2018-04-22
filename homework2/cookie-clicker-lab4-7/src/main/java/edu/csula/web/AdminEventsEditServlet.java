@@ -18,7 +18,7 @@ import edu.csula.storage.EventsDAO;
 import edu.csula.models.Event;
 import edu.csula.storage.servlet.UsersDAOImpl;
 
-@WebServlet("/admin/events/edit")
+@WebServlet("eventsedit")
 public class AdminEventsEditServlet extends HttpServlet {
 
     public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,8 +39,8 @@ public class AdminEventsEditServlet extends HttpServlet {
             String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
             String html = "<html><head><title>Incremental Game</title>" + cssTag + "</head><body>";
             html += "<h1>Incremental Game Framework</h1>";
-            html += "<h3><a href=''>Game Information</a> | <a href=''>Generators</a> | <a href='/admin/events'>Events</a> | <a href='/admin/auth'>Logout</a> ";
-            html += "     <form method='POST'>";
+            html += "<h3><a href=''>Game Information</a> | <a href='/generators'>Generators</a> | <a href='/events'>Events</a> | <a href='/auth'>Logout</a> ";
+            html += "     <form  method='POST'>";
             html += "        <label for='EventName'>Event Name</label>";
             html += "        <input type='text' name='evename' id='EventName' value='" + e1.getName() + "'>";
             html += "        <label for='EventDescription'>Event Description</label>";
@@ -55,7 +55,7 @@ public class AdminEventsEditServlet extends HttpServlet {
             out.println(html);
         }
         else{
-            response.sendRedirect("/admin/auth");
+            response.sendRedirect("auth");
         }
     }
 
@@ -69,6 +69,6 @@ public class AdminEventsEditServlet extends HttpServlet {
         int triggerAt=Integer.parseInt(request.getParameter("triggname"));
         Event e=new Event(id,name,description,triggerAt);
         dao.set(id,e);
-        response.sendRedirect("/admin/events");
+        response.sendRedirect("events");
     }
 }
