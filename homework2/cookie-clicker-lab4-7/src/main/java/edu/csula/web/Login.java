@@ -42,10 +42,10 @@ public class Login extends HttpServlet {
     @Override
     public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: handle upsert transaction
-       String username=request.getParameter("username");
-       String password=request.getParameter("password");
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
 
-       //Check is username and password are correct, redirect to members
+        //Check is username and password are correct, redirect to members
         if(username.equals("shardul") && password.equals("12345")){
             request.getSession().setAttribute("user",username);
             response.sendRedirect("members");
@@ -56,3 +56,4 @@ public class Login extends HttpServlet {
         }
     }
 }
+
