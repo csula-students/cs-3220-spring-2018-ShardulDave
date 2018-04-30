@@ -12,7 +12,8 @@
     <h3>
         <a href=''>Game Information</a> |
         <a href=''>Generators</a> |
-        <a href='/admin/events'>Events</a>
+        <a href='/events'>Events</a> |
+        <a href='/auth'>Logout</a>
         <div class='row'>
             <div class='column'>
                 <div class='flex-container'>
@@ -56,8 +57,8 @@
                     <td>${e.getDescription()}</td>
                     <td>${e.getTriggerAt()}</td>
                     <td>
-                        <a href='/admin/events/edit?id=${e.getId()}'>edit</a>|
-                        <a href='/admin/events/remove?id=${e.getId()}'>delete</a>
+                        <a href='/eventsedit?id=${e.getId()}'>edit</a>|
+                        <a href='/eventsremove?id=${e.getId()}'>delete</a>
                     </td>
                 </tr>
                 </c:forEach>

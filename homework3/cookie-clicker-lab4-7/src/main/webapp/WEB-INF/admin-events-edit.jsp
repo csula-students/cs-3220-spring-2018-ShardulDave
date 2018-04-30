@@ -13,7 +13,8 @@
     <h3>
         <a href=''>Game Information</a> |
         <a href=''>Generators</a> |
-        <a href='/admin/events'>Events</a>
+        <a href='/events'>Events</a> |
+        <a href='/auth'>Logout</a>
         <form method='POST'>
             <label for='EventName'>Event Name</label>
             <input type='text' name='evename' id='EventName' value='${e1.getName()}'>
