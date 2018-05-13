@@ -41,27 +41,87 @@ public class GeneratorsDAOImpl implements GeneratorsDAO {
 	@Override
 	public List<Generator> getAll() {
 		// TODO: get a list of generators from the context
-		return new ArrayList<>();
+		List<Generator> generators=(List<Generator>) context.getAttribute(CONTEXT_NAME);
+
+		if(generators != null){
+			return generators;
+		}
+		else {
+			return new ArrayList<>();
+		}
 	}
 
 	@Override
 	public Optional<Generator> getById(int id) {
 		// TODO: get a certain generator from context
+		List<Generator> generators=(List<Generator>) context.getAttribute(CONTEXT_NAME);
+		Generator g;
+		for(int i=0;i<generators.size();i++){
+			if(generators.get(i).getId()==id){
+				g=generators.get(i);
+				return Optional.of(g);
+			}
+		}
 		return Optional.empty();
 	}
 
 	@Override
 	public void set(int id, Generator generator) {
 		// TODO: change a certain generator from context
+		List<Generator> generators=(List<Generator>) context.getAttribute(CONTEXT_NAME);
+		if(generators!=null) {
+			for(Generator g:generators){
+				if(g.getId()==id){
+					g.setId(generator.getId());
+					g.setName(generator.getName());
+					g.setDescription(generator.getDescription());
+					g.setRate(generator.getRate());
+					g.setBaseCost(generator.getBaseCost());
+					g.setUnlockAt(generator.getUnlockAt());
+				}
+			}
+			context.setAttribute(CONTEXT_NAME, generators);
+		}
+		else{
+			List<Generator> generators1=new ArrayList<>();
+			generators=generators1;
+			context.setAttribute(CONTEXT_NAME, generators);
+		}
 	}
 
 	@Override
 	public void add(Generator generator) {
 		// TODO: add a new generator to the context
+		List<Generator> generators=(List<Generator>) context.getAttribute(CONTEXT_NAME);
+		if(generators!=null) {
+			generators.add(generator);
+			context.setAttribute(CONTEXT_NAME, generators);
+		}
+		else{
+			List<Generator> generators1=new ArrayList<>();
+			generators1.add(generator);
+			generators=generators1;
+			context.setAttribute(CONTEXT_NAME, generators);
+		}
 	}
 
 	@Override
 	public void remove(int id) {
 		// TODO: remove a single generator from the context
+		List<Generator> generators=(List<Generator>) context.getAttribute(CONTEXT_NAME);
+		if(generators!=null){
+			for(Generator g:generators){
+				if(g.getId()==id){
+					generators.remove(g);
+					break;
+				}
+			}
+			context.setAttribute(CONTEXT_NAME,generators);
+		}
+		else{
+			List<Generator> generators1=new ArrayList<>();
+			generators=generators1;
+			context.setAttribute(CONTEXT_NAME, generators);
+		}
 	}
 }

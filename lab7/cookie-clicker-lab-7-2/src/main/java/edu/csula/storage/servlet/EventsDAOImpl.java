@@ -1,6 +1,7 @@
 package edu.csula.storage.servlet;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,28 +41,89 @@ public class EventsDAOImpl implements EventsDAO {
 	@Override
 	public List<Event> getAll() {
 		// TODO: read a list of events from context
-		return new ArrayList<>();
+		List<Event> events=(List<Event>) context.getAttribute(CONTEXT_NAME);
+
+		if(events != null){
+			return events;
+		}
+		else {
+			return new ArrayList<>();
+		}
+
 	}
 
 	@Override
 	public Optional<Event> getById(int id) {
 		// TODO: get a certain event given its id from context (see getAll() on
 		// getting a list first and get a certain one from the list)
+		List<Event> events=(List<Event>) context.getAttribute(CONTEXT_NAME);
+		Event e;
+		for(int i=0;i<events.size();i++){
+			if(events.get(i).getId()==id){
+				e=events.get(i);
+				return Optional.of(e);
+			}
+		}
 		return Optional.empty();
 	}
 
 	@Override
 	public void set(int id, Event event) {
 		// TODO: set a certain event given id to be different from context
+		List<Event> events=(List<Event>) context.getAttribute(CONTEXT_NAME);
+		if(events!=null) {
+			for(Event e:events){
+				if(e.getId()==id){
+					e.setId(event.getId());
+					e.setName(event.getName());
+					e.setTriggerAt(event.getTriggerAt());
+					e.setDescription(event.getDescription());
+				}
+			}
+			context.setAttribute(CONTEXT_NAME, events);
+		}
+		else{
+			List<Event> events1=new ArrayList<>();
+			events=events1;
+			context.setAttribute(CONTEXT_NAME, events);
+		}
+
 	}
 
 	@Override
 	public void add(Event event) {
 		// TODO: add a new event to the context
+		List<Event> events=(List<Event>) context.getAttribute(CONTEXT_NAME);
+		if(events!=null) {
+			events.add(event);
+			context.setAttribute(CONTEXT_NAME, events);
+		}
+		else{
+			List<Event> events1=new ArrayList<>();
+			events1.add(event);
+			events=events1;
+			context.setAttribute(CONTEXT_NAME, events);
+		}
+
 	}
 
 	@Override
 	public void remove(int id) {
 		// TODO: remove a single event given id
+		List<Event> events=(List<Event>) context.getAttribute(CONTEXT_NAME);
+		if(events!=null){
+			for(Event e:events){
+				if(e.getId()==id){
+					events.remove(e);
+					break;
+				}
+			}
+			context.setAttribute(CONTEXT_NAME, events);
+		}
+		else{
+			List<Event> events1=new ArrayList<>();
+			events=events1;
+			context.setAttribute(CONTEXT_NAME, events);
+		}
 	}
 }
