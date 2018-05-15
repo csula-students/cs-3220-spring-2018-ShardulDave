@@ -39,11 +39,14 @@ public class AdminEventsServlet extends HttpServlet {
 		// TODO: handle upsert transaction
 		//EventsDAO dao = new EventsDAOImpl(getServletContext());
 		EventsDAO dao = new EventsDAOImpl(new Database());
-		Collection<Event> events = dao.getAll();
+		//Collection<Event> events = dao.getAll();
 		String name=request.getParameter("evename");
 		String description=request.getParameter("EventDescription");
 		int triggerAt=Integer.parseInt(request.getParameter("triggname"));
-		Event e=new Event(events.size(),name,description,triggerAt);
+		Event e=new Event();
+		e.setName(name);
+		e.setDescription(description);
+		e.setTriggerAt(triggerAt);
 		dao.add(e);
 		response.sendRedirect("events");
 	}
