@@ -1,0 +1,54 @@
+package edu.csula.web;
+
+import edu.csula.storage.UsersDAO;
+import edu.csula.storage.servlet.UsersDAOImpl;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/auth")
+public class AuthenticationServlet extends HttpServlet {
+	@Override
+	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+
+		PrintWriter out = response.getWriter();
+		// TODO: render the authentication page HTML
+
+		request.getRequestDispatcher("/WEB-INF/authentication.jsp").forward(request, response);
+
+	}
+
+	@Override
+	public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO: handle login
+		// TODO: handle upsert transaction
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
+
+		UsersDAO daosession=new UsersDAOImpl(request.getSession());
+		//Check is username and password are correct, redirect to members
+		if(daosession.authenticate(username,password)){
+			response.sendRedirect("events");
+		}
+
+		//redirect to login
+		else{
+			response.sendRedirect("auth");
+		}
+	}
+
+	@Override
+	public void doDelete( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO: handle logout
+		UsersDAO daosession=new UsersDAOImpl(request.getSession());
+		daosession.logout();
+	}
+}
