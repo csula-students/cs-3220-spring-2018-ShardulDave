@@ -26,7 +26,7 @@ public class HelloJDBCServlet extends HttpServlet {
 
 		Connection c = null;
 		try {
-			String url = "jdbc:mysql://localhost/cs3220_lab";
+			String url = "jdbc:mysql://localhost/mylocalhost";
 			String username = "root";
 			String password = "";
 
@@ -37,13 +37,14 @@ public class HelloJDBCServlet extends HttpServlet {
 
 			c = DriverManager.getConnection( url, username, password );
 			Statement stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery( "SELECT * FROM employees" );
+			ResultSet rs = stmt.executeQuery( "SELECT * FROM employees where first_name='John'" );
 
 			while( rs.next() ) {
 				out.println( rs.getString( 1 ) );
 				out.println( rs.getString( 2 ) );
 				out.println( rs.getString( 3 ) );
-				out.println( rs.getFloat( 4 ) );
+				out.println( rs.getString( 4 ) );
+				out.println(rs.getString(5));
 				out.println( "<br>" );
 			}
 

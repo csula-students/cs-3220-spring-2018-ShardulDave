@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.csula.storage.UsersDAO;
-import edu.csula.storage.servlet.EventsDAOImpl;
-import edu.csula.storage.EventsDAO;
-import edu.csula.models.Event;
 import edu.csula.storage.servlet.UsersDAOImpl;
+import edu.csula.storage.EventsDAO;
+import edu.csula.storage.mysql.*;
+
+
 
 @WebServlet("/eventsremove")
 
@@ -26,7 +27,8 @@ public class AdminEventsRemoveServlet extends HttpServlet {
         // TODO: handle upsert transaction
         UsersDAO dao1=new UsersDAOImpl(request.getSession());
         if(dao1 != null) {
-            EventsDAO dao = new EventsDAOImpl(getServletContext());
+            //EventsDAO dao = new EventsDAOImpl(getServletContext());
+            EventsDAO dao = new EventsDAOImpl(new Database());
             int id = Integer.parseInt(request.getParameter("id"));
             dao.remove(id);
             response.sendRedirect("events");

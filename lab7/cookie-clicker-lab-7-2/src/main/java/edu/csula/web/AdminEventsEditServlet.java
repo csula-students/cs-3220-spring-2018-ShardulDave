@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.csula.storage.UsersDAO;
-import edu.csula.storage.servlet.EventsDAOImpl;
 import edu.csula.storage.EventsDAO;
-import edu.csula.models.Event;
-import edu.csula.storage.servlet.UsersDAOImpl;
+import edu.csula.storage.mysql.*;
+import edu.csula.models.*;
 
 @WebServlet("eventsedit")
 public class AdminEventsEditServlet extends HttpServlet {
@@ -25,7 +23,8 @@ public class AdminEventsEditServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         // TODO: render the events page HTML
-        EventsDAO dao = new EventsDAOImpl(getServletContext());
+        //EventsDAO dao = new EventsDAOImpl(getServletContext());
+        EventsDAO dao = new EventsDAOImpl(new Database());
         Collection<Event> events = dao.getAll();
         int id=Integer.parseInt(request.getParameter("id"));
         Event e1=null;
@@ -42,7 +41,8 @@ public class AdminEventsEditServlet extends HttpServlet {
     @Override
     public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: handle upsert transaction
-        EventsDAO dao = new EventsDAOImpl(getServletContext());
+        //EventsDAO dao = new EventsDAOImpl(getServletContext());
+        EventsDAO dao = new EventsDAOImpl(new Database());
         int id=Integer.parseInt(request.getParameter("id"));
         String name=request.getParameter("evename");
         String description=request.getParameter("EventDescription");
