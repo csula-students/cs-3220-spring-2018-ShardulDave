@@ -11,7 +11,7 @@
     <h1>Incremental Game Framework</h1>
     <h3>
         <a href=''>Game Information</a> |
-        <a href=''>Generators</a> |
+        <a href='/generators'>Generators</a> |
         <a href='/events'>Events</a> |
         <a href='/auth'>Logout</a>
         <div class='row'>
