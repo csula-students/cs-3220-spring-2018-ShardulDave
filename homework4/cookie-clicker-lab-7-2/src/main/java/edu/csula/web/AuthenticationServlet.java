@@ -22,18 +22,7 @@ public class AuthenticationServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		// TODO: render the authentication page HTML
 
-		String cssTag = "<link rel='stylesheet' type='text/css' href='/app.css'>";
-		String html = "<html><head><title>Login</title>" + cssTag + "</head><body>";
-		html += "<h1>Incremental Game Framework</h1>";
-		html += "     <form action='auth' method='POST'>";
-		html += "        <label for='username'>Username</label>";
-		html += "        <input type='text' name='username' id='uname'>";
-		html += "        <label for='password'>Password</label>";
-		html += "        <input type='text' name='password' id='pass'>";
-		html += "        <button>Log In</button>";
-		html += "     </form>";
-		html += "</body></html>";
-		out.println(html);
+		request.getRequestDispatcher("/WEB-INF/authentication.jsp").forward(request, response);
 
 	}
 
