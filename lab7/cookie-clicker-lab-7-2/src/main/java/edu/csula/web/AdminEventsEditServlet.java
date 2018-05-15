@@ -47,7 +47,10 @@ public class AdminEventsEditServlet extends HttpServlet {
         String name=request.getParameter("evename");
         String description=request.getParameter("EventDescription");
         int triggerAt=Integer.parseInt(request.getParameter("triggname"));
-        Event e=new Event(id,name,description,triggerAt);
+        Event e=new Event();
+        e.setName(name);
+        e.setDescription(description);
+        e.setTriggerAt(triggerAt);
         dao.set(id,e);
         response.sendRedirect("events");
     }
