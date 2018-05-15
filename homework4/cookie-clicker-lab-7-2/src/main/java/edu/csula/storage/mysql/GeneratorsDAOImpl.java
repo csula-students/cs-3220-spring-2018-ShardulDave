@@ -17,7 +17,7 @@ public class GeneratorsDAOImpl implements GeneratorsDAO {
 	protected static final String getAllQuery = "select * from generators;";
 	protected static final String getByIdQuery = "select * from generators where id=?;";
 	protected static final String setQuery = "update generators set name=?, description=?, rate=?, base_cost=?, unlock_at=? where id=?;";
-	protected static final String addQuery = "insert into events values (?,?,?,?,?,?);";
+	protected static final String addQuery = "insert into generators values (?,?,?,?,?,?);";
 	protected static final String removeQuery = "delete from generators where id=?;";
 
 	public GeneratorsDAOImpl(Database context) {

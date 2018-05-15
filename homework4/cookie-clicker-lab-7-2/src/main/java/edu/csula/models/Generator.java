@@ -8,6 +8,8 @@ public class Generator {
 	private int baseCost;
 	private int unlockAt;
 
+	public Generator(){}
+
 	public Generator(int id, String name, String description, int rate, int baseCost, int unlockAt) {
 		this.id = id;
 		this.name = name;

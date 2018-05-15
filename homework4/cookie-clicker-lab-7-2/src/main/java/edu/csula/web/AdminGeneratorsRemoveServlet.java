@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.csula.storage.GeneratorsDAO;
 import edu.csula.storage.UsersDAO;
-import edu.csula.storage.servlet.EventsDAOImpl;
-import edu.csula.storage.EventsDAO;
-import edu.csula.models.Event;
-import edu.csula.storage.servlet.GeneratorsDAOImpl;
+import edu.csula.storage.mysql.*;
 import edu.csula.storage.servlet.UsersDAOImpl;
 
 @WebServlet("/generatorsremove")
@@ -28,7 +25,8 @@ public class AdminGeneratorsRemoveServlet extends HttpServlet {
         // TODO: handle upsert transaction
         UsersDAO dao1=new UsersDAOImpl(request.getSession());
         if(dao1 != null) {
-            GeneratorsDAO dao = new GeneratorsDAOImpl(getServletContext());
+            //GeneratorsDAO dao = new GeneratorsDAOImpl(getServletContext());
+            GeneratorsDAO dao = new GeneratorsDAOImpl(new Database());
             int id = Integer.parseInt(request.getParameter("id"));
             dao.remove(id);
             response.sendRedirect("generators");

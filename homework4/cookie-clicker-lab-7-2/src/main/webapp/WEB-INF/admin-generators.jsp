@@ -19,7 +19,7 @@
                 <div class='flex-container'>
                     <form method='POST'>
                         <div>
-                            <label for='GeneratorName'>Event Name</label>
+                            <label for='GeneratorName'>Generator Name</label>
                         </div>
                         <div>
                             <input type='text' name='genname' id='GeneratorName' </div>
