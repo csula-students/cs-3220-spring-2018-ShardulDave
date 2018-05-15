@@ -64,15 +64,46 @@ public class GeneratorsDAOImpl implements GeneratorsDAO {
 	@Override
 	public void set(int id, Generator generator) {
 		// TODO: update specific generator by id
+		try(Connection c=context.getConnection();PreparedStatement stmt=c.prepareStatement(setQuery)){
+			stmt.setString(1,generator.getName());
+			stmt.setString(2,generator.getDescription());
+			stmt.setInt(3,generator.getRate());
+			stmt.setInt(4,generator.getBaseCost());
+			stmt.setInt(5,generator.getUnlockAt());
+			stmt.setInt(6,id);
+			stmt.executeUpdate();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void add(Generator generator) {
 		// TODO: implement jdbc logic to add a new generator
+		try(Connection c=context.getConnection();PreparedStatement stmt=c.prepareStatement(addQuery)){
+			stmt.setInt(1,generator.getId());
+			stmt.setString(2,generator.getName());
+			stmt.setString(3,generator.getDescription());
+			stmt.setInt(4,generator.getRate());
+			stmt.setInt(5,generator.getBaseCost());
+			stmt.setInt(6,generator.getUnlockAt());
+			stmt.executeUpdate();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void remove(int id) {
 		// TODO: implement jdbc logic to remove generator by id
+		try(Connection c=context.getConnection();PreparedStatement stmt=c.prepareStatement(removeQuery)){
+			stmt.setInt(1,id);
+			stmt.executeUpdate();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 }
